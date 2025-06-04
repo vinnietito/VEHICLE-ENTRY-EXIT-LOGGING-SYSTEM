@@ -16,3 +16,16 @@ app.post('/entry', (req, res) => {
         res.json({ message: 'Entry logged successfully'});
     });
 });
+
+// Log vehicle exit
+app.post('/exit', (req, res) => {
+    const { plate } = req.body;
+    const sql = `UPDATE vehicles SET exit_time = NOW(), status = 'Left'
+                 WHERE plate_number = ? AND status = 'Inside'
+                 ORDER BY entry_time DESC LIMIT 1`;
+    connection.query(sql, [plate], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (results.affectedRows === 0) return res.status(404).json({ message: 'Vehicle not found or already exited' });
+        res.json({ message: 'Exit logged successfully' });
+    });
+});
