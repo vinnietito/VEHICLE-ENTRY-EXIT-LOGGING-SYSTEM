@@ -9,25 +9,25 @@ app.use(express.static('public'));
 
 // Log vehicle entry
 app.post('/entry', (req, res) => {
-    const { plate } = req.body;
-    const sql = 'INSERT INTO vehicles (plate_number, entry_time) VALUES (?, NOW())'
-    connection.query(sql, [plate], err => {
-        if (err) return res.status(500).json({ error: err.meesage });
-        res.json({ message: 'Entry logged successfully'});
-    });
+  const { plate } = req.body;
+  const sql = 'INSERT INTO vehicles (plate_number, entry_time) VALUES (?, NOW())';
+  connection.query(sql, [plate], err => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Entry logged successfully' });
+  });
 });
 
 // Log vehicle exit
 app.post('/exit', (req, res) => {
-    const { plate } = req.body;
-    const sql = `UPDATE vehicles SET exit_time = NOW(), status = 'Left'
-                 WHERE plate_number = ? AND status = 'Inside'
-                 ORDER BY entry_time DESC LIMIT 1`;
-    connection.query(sql, [plate], (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (results.affectedRows === 0) return res.status(404).json({ message: 'Vehicle not found or already exited' });
-        res.json({ message: 'Exit logged successfully' });
-    });
+  const { plate } = req.body;
+  const sql = `UPDATE vehicles SET exit_time = NOW(), status = 'Left'
+               WHERE plate_number = ? AND status = 'Inside'
+               ORDER BY entry_time DESC LIMIT 1`;
+  connection.query(sql, [plate], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (results.affectedRows === 0) return res.status(404).json({ message: 'Vehicle not found or already exited' });
+    res.json({ message: 'Exit logged successfully' });
+  });
 });
 
 // Get current vehicles
@@ -41,15 +41,15 @@ app.get('/current', (req, res) => {
 
 // Get all logs
 app.get('/logs', (req, res) => {
-    const sql = 'SELECT * FROM vehicles ORDER BY entry_time DESC';
-    connection.query(sql, (err, rows) = > {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
+  const sql = 'SELECT * FROM vehicles ORDER BY entry_time DESC';
+  connection.query(sql, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
 });
 
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log('Server running on http://localhost:${PORT}');
+  console.log(`Server running on http://localhost:${PORT}`);
 });
