@@ -48,6 +48,11 @@ app.get('/logs', (req, res) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Vehicle Entry & Exit Logging System API is running 🚗');
+});
+
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {
