@@ -38,3 +38,12 @@ app.get('/current', (req, res) => {
     res.json(rows);
   });
 });
+
+// Get all logs
+app.get('/logs', (req, res) => {
+    const sql = 'SELECT * FROM vehicles ORDER BY entry_time DESC';
+    connection.query(sql, (err, rows) = > {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
