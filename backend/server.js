@@ -29,3 +29,12 @@ app.post('/exit', (req, res) => {
         res.json({ message: 'Exit logged successfully' });
     });
 });
+
+// Get current vehicles
+app.get('/current', (req, res) => {
+  const sql = 'SELECT * FROM vehicles WHERE status = "Inside" ORDER BY entry_time DESC';
+  connection.query(sql, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
