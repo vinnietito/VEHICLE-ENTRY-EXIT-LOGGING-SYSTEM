@@ -8,3 +8,11 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Log vehicle entry
+app.post('/entry', (req, res) => {
+    const { plate } = req.body;
+    const sql = 'INSERT INTO vehicles (plate_number, entry_time) VALUES (?, NOW())'
+    connection.query(sql, [plate], err => {
+        if (err) return res.status(500).json({ error: err.meesage });
+        res.json({ message: 'Entry logged successfully'});
+    });
+});
