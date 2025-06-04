@@ -21,3 +21,25 @@ async function logExit() {
   });
   refreshTables();
 }
+
+async function refreshTables() {
+  const current = await (await fetch(`${baseURL}/current`)).json();
+  const logs = await (await fetch(`${baseURL}/logs`)).json();
+
+  document.getElementById('currentTable').innerHTML = `
+    <tr><th>Plate</th><th>Entry Time</th></tr>
+    ${current.map(row => `<tr><td>${row.plate_number}</td><td>${row.entry_time}</td></tr>`).join('')}
+  `;
+
+  document.getElementById('logTable').innerHTML = `
+    <tr><th>Plate</th><th>Entry</th><th>Exit</th><th>Status</th></tr>
+    ${logs.map(row => `<tr>
+      <td>${row.plate_number}</td>
+      <td>${row.entry_time}</td>
+      <td>${row.exit_time || '-'}</td>
+      <td>${row.status}</td>
+    </tr>`).join('')}
+  `;
+}
+
+refreshTables();
