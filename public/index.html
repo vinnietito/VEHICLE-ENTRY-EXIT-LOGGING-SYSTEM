@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vehicle Entry & Exit System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🚗 Vehicle Entry & Exit Logging System</h1>
+
+    <div class="form-section">
+      <input type="text" id="plate" placeholder="Enter Plate Number" required />
+      <div class="button-group">
+        <button onclick="logEntry()">Log Entry</button>
+        <button onclick="logExit()">Log Exit</button>
+      </div>
+    </div>
+
+    <section class="table-section">
+      <h2>Currently Inside</h2>
+      <table id="currentTable">
+        <thead>
+          <tr>
+            <th>Plate Number</th>
+            <th>Entry Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h2>All Logs</h2>
+      <table id="logTable">
+        <thead>
+          <tr>
+            <th>Plate Number</th>
+            <th>Entry Time</th>
+            <th>Exit Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
