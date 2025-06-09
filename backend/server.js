@@ -62,6 +62,7 @@ app.get('/', (req, res) => {
 
 // Start server
 const PORT = 3000;
+const PORT2 = 3001;
 app.listen(PORT, () => {
   console.log('Connected to MySQL database');
   console.log(`Server running at http://localhost:${PORT}`);
